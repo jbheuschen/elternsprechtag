@@ -44,6 +44,11 @@ class Teacher
      */
     private $appointments;
 
+    /**
+     * @ORM\OneToOne(targetEntity=User::class, mappedBy="teacher", cascade={"persist", "remove"})
+     */
+    private $user;
+
     public function __construct()
     {
         $this->availableSlots = new ArrayCollection();
@@ -141,6 +146,23 @@ class Teacher
                 $appointment->setTeacher(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): self
+    {
+        // set the owning side of the relation if necessary
+        if ($user->getTeacher() !== $this) {
+            $user->setTeacher($this);
+        }
+
+        $this->user = $user;
 
         return $this;
     }

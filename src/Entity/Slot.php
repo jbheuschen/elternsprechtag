@@ -130,4 +130,9 @@ class Slot
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->getSlotBegin()->format("H:i") . " - " . $this->getSlotEnd()->format("H:i");
+    }
 }

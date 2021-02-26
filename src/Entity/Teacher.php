@@ -166,4 +166,9 @@ class Teacher
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->getSurname() . " (" . $this->getAbbreviation() . ")";
+    }
 }

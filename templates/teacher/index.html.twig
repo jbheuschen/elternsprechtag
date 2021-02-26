@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lehrerliste{% endblock %}
+
+{% block body %}
+    <h1>Lehrerliste</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nachname</th>
+                <th>Kürzel</th>
+                <th>E-Mail</th>
+                <th>Aktionen</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for teacher in teachers %}
+            <tr>
+                <td>{{ teacher.id }}</td>
+                <td>{{ teacher.surname }}</td>
+                <td>{{ teacher.abbreviation }}</td>
+                <td>{{ teacher.email }}</td>
+                <td>
+                    <a href="{{ path('teacher_show', {'id': teacher.id}) }}">show</a>
+                    <a href="{{ path('teacher_edit', {'id': teacher.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Keine Einträge gefunden.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('teacher_new') }}">Neu anlegen</a>
+{% endblock %}

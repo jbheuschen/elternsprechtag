@@ -14,18 +14,17 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+                # where to redirect after logout
+                # target: app_any_route
         main:
-            anonymous: true
-            lazy: true
-            provider: app_user_provider
+            anonymous: ~
             guard:
                 authenticators:
-                    - App\Security\LoginAuthenticator
+                    - App\Security\Authenticator
             logout:
                 path: app_logout
                 # where to redirect after logout
                 # target: app_any_route
-
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 

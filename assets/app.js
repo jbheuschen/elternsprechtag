@@ -28,10 +28,10 @@ $(document).ready(function() {
            url: '/appointment/blocked/' + $(this).val(),
            type: "GET",
            success: function(data) {
-               console.log(data);
                $("option").attr("disabled", false);
-               for(var i = 0; i < data.length; i++) {
-                  $("option[value=" + data[i] + "]").attr('disabled', true)
+               for(let i = 0; i < data.length; i++) {
+                  $("#appointment_slot option[value=" + data[i] + "]").attr('disabled', true);
+                  $("#appointment_slot option[value=" + data[i] + "]").attr('selected', true);
                }
                $("#appointment_slot").attr('disabled', false);
            },

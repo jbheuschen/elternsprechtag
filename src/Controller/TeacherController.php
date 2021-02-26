@@ -3,8 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Teacher;
-use App\Entity\User;
-use App\Form\TeacherType;
+use App\Form\Teacher1Type;
 use App\Repository\TeacherRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,18 +31,12 @@ class TeacherController extends AbstractController
     public function new(Request $request): Response
     {
         $teacher = new Teacher();
-        $form = $this->createForm(TeacherType::class, $teacher);
+        $form = $this->createForm(Teacher1Type::class, $teacher);
         $form->handleRequest($request);
-        $newPass = $this->generateRandomString(5);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $u = new User();
-            $u->setTeacher($teacher);
-            $u->setEmail($teacher->getEmail());
-            $u->setPassword($newPass);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($teacher);
-            $entityManager->persist($u);
             $entityManager->flush();
 
             return $this->redirectToRoute('teacher_index');
@@ -51,7 +44,6 @@ class TeacherController extends AbstractController
 
         return $this->render('teacher/new.html.twig', [
             'teacher' => $teacher,
-            'newPass' => $newPass,
             'form' => $form->createView(),
         ]);
     }
@@ -71,7 +63,7 @@ class TeacherController extends AbstractController
      */
     public function edit(Request $request, Teacher $teacher): Response
     {
-        $form = $this->createForm(TeacherType::class, $teacher);
+        $form = $this->createForm(Teacher1Type::class, $teacher);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -98,15 +90,5 @@ class TeacherController extends AbstractController
         }
 
         return $this->redirectToRoute('teacher_index');
-    }
-
-    function generateRandomString($length = 10) {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
-        return $randomString;
     }
 }

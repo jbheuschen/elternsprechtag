@@ -22,4 +22,19 @@ require('bootstrap');
 
 $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
+    $("#appointment_teacher").change(function() {
+       $("#appointment_slot").attr('disabled', true);
+       $.ajax({
+           url: '/appointment/blocked/' + $(this).val(),
+           type: "GET",
+           success: function(data) {
+               console.log(data);
+               $("option").attr("disabled", false);
+               for(var i = 0; i < data.length; i++) {
+                  $("option[value=" + data[i] + "]").attr('disabled', true)
+               }
+               $("#appointment_slot").attr('disabled', false);
+           },
+       });
+    });
 });

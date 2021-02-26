@@ -1,23 +1,20 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Type;
 
-use App\Entity\Appointment;
 use App\Entity\Slot;
 use App\Entity\Teacher;
-use App\Form\Type\AppointmentSlotType;
 use App\Repository\AppointmentRepository;
 use App\Repository\SlotRepository;
 use App\Repository\TeacherRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AppointmentType extends AbstractType
+class AppointmentSlotType extends AbstractType
 {
+
     private $tR;
     private $aR;
     private $sR;
@@ -32,10 +29,6 @@ class AppointmentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', null, ["attr" => ["placeholder" => "Vorname"]])
-            ->add('surname', null, ["attr" => ["placeholder" => "Name"]])
-            ->add('email', EMailType::class, ["attr" => ["placeholder" => "E-Mail-Adresse"]])
-            ->add('message', TextAreaType::class, ["attr" => ["placeholder" => "Nachricht (optional)"]])
             ->add('teacher', ChoiceType::class, [
                 "choices" => $this->tR->findAll(),
                 "choice_label" => function(?Teacher $t) {
@@ -66,7 +59,7 @@ class AppointmentType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Appointment::class,
+            // Configure your form options here
         ]);
     }
 }

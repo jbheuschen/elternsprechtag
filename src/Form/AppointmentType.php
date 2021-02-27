@@ -32,9 +32,12 @@ class AppointmentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', null, ["attr" => ["placeholder" => "Vorname"]])
-            ->add('surname', null, ["attr" => ["placeholder" => "Name"]])
+            ->add('name', null, ["attr" => ["placeholder" => "Ihr Vorname"]])
+            ->add('surname', null, ["attr" => ["placeholder" => "Ihr Name"]])
+            ->add('childName', null, ["attr" => ["placeholder" => "SchülerIn"]])
+            ->add('childClass', null, ["attr" => ["placeholder" => "Klasse"]])
             ->add('email', EMailType::class, ["attr" => ["placeholder" => "E-Mail-Adresse"]])
+            ->add('phone', null, ["attr" => ["placeholder" => "Telefonnummer"]])
             ->add('message', TextAreaType::class, ["attr" => ["placeholder" => "Nachricht (optional)"]])
             ->add('teacher', ChoiceType::class, [
                 "choices" => $this->tR->findAll(),

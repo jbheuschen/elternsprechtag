@@ -54,7 +54,7 @@ class AppointmentController extends AbstractController
             $entityManager->persist($appointment);
             $entityManager->flush();
 
-            $email = (new Email())
+            $email = (new TemplatedEmail())
                 ->to($appointment->getEmail())
                 ->subject('Ihr Elternsprechstagstermin')
                 ->htmlTemplate('mail/success.html.twig')

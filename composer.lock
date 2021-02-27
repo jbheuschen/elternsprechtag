@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c482e44d1ae70ed7d6b1d17fdce5b6f6",
+    "content-hash": "d7095b60c7baf00fb82fc043d253f9cc",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -6586,6 +6586,9 @@
             ],
             "description": "Provides a tight integration of Twig into the Symfony full-stack framework",
             "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/twig-bundle/tree/v5.2.3"
+            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",

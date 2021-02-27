@@ -49,6 +49,21 @@ class Appointment
      */
     private $message;
 
+    /**
+     * @ORM\Column(type="string", length=40, nullable=true)
+     */
+    private $phone;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $childName;
+
+    /**
+     * @ORM\Column(type="string", length=5, nullable=true)
+     */
+    private $childClass;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -122,6 +137,42 @@ class Appointment
     public function setMessage(?string $message): self
     {
         $this->message = $message;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?string $phone): self
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getChildName(): ?string
+    {
+        return $this->childName;
+    }
+
+    public function setChildName(?string $childName): self
+    {
+        $this->childName = $childName;
+
+        return $this;
+    }
+
+    public function getChildClass(): ?string
+    {
+        return $this->childClass;
+    }
+
+    public function setChildClass(?string $childClass): self
+    {
+        $this->childClass = $childClass;
 
         return $this;
     }

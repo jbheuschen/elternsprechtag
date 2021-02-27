@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/teacher")
@@ -28,13 +29,15 @@ class TeacherController extends AbstractController
     /**
      * @Route("/new", name="teacher_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, UserPasswordEncoderInterface $upei): Response
     {
         $teacher = new Teacher();
         $form = $this->createForm(Teacher1Type::class, $teacher);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $teacher->setPassword($upei->encodePassword($teacher, $form->get('password')->getData()));
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($teacher);
             $entityManager->flush();

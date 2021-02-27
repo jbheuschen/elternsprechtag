@@ -1,3 +1,7 @@
 framework:
     mailer:
         dsn: '%env(MAILER_DSN)%'
+        envelope:
+            sender: 'mail@fheuschen.de'
+        headers:
+            from: 'Heinrich-von-Gagern-Gymnasium <mail@fheuschen.de>'

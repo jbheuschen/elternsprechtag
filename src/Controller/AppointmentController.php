@@ -10,7 +10,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
 /**
  * @Route("/appointment")
@@ -41,7 +43,7 @@ class AppointmentController extends AbstractController
     /**
      * @Route("/new", name="appointment_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, MailerInterface $mailer): Response
     {
         $appointment = new Appointment();
         $form = $this->createForm(AppointmentType::class, $appointment);
@@ -52,12 +54,33 @@ class AppointmentController extends AbstractController
             $entityManager->persist($appointment);
             $entityManager->flush();
 
+            $email = (new Email())
+                ->to($appointment->getEmail())
+                ->subject('Ihr Elternsprechstagstermin')
+                ->htmlTemplate('mail/success.html.twig')
+                ->context([
+                    "appointment" => $appointment,
+                ]);
+            $mailer->send($email);
+
             return $this->redirectToRoute('appointment_index');
         }
+
+
 
         return $this->render('appointment/new.html.twig', [
             'appointment' => $appointment,
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/cancel/{id}", name="appointment_cancel", methods={"GET","POST"})
+     */
+    public function cancel(Appointment $appointment, Request $request, MailerInterface $mailer): Response
+    {
+        return $this->render('appointment/show.html.twig', [
+            'appointment' => $appointment,
         ]);
     }
 

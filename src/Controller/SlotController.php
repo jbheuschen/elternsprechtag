@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Slot;
 use App\Form\SlotType;
 use App\Repository\SlotRepository;
+use App\Repository\TeacherRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,13 +29,18 @@ class SlotController extends AbstractController
     /**
      * @Route("/new", name="slot_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, TeacherRepository $teacherRepository): Response
     {
         $slot = new Slot();
         $form = $this->createForm(SlotType::class, $slot);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            foreach($teacherRepository->findAll() as $t) {
+                $t->addAvailableSlot($slot);
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($slot);
             $entityManager->flush();

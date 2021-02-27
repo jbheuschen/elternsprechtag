@@ -14,7 +14,6 @@ class SlotType extends AbstractType
         $builder
             ->add('slotBegin')
             ->add('slotEnd')
-            ->add('teachers')
         ;
     }
 
